@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block content %}
+
+<div>
+ <form id="upload-file" method="post" enctype="multipart/form-data" class="row">
+  <div class="col-md-6 mb-3">
+   <div class="form-group">
+    <h3 class="mb-2">Browse for the image</h3>
+    <input
+     type="file"
+     class="form-control border"
+     name="file"
+     id="imageUpload"
+     accept=".png, .jpg, .jpeg"
+    />
+   </div>
+  </div>
+  <div class="col-md-6 mb-3">
+   <div class="form-group">
+    <h3 class="mb-2">Select A Mode</h3>
+    <select name="select_mode" id="select_mode" class="form-control border">
+     <option value="object" selected>Object Detection</option>
+     <option value="currency">Currency Detection</option>
+     <option value="text">Text Recognition</option>
+     <option value="describe">Describe The Scene</option>
+    </select>
+   </div>
+  </div>
+ </form>
+
+ <div class="image-section" style="display: none">
+  <div class="img-preview">
+   <div id="imagePreview"></div>
+  </div>
+  <div>
+   <button type="button" class="btn btn-success btn-lg" id="btn-predict">
+    Detect
+   </button>
+  </div>
+ </div>
+
+ <div class="loader" style="display: none"></div>
+
+ <h3 id="result" class="text-success">
+  <span> </span>
+ </h3>
+</div>
+
+{% endblock %}
