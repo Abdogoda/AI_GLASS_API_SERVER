@@ -97,7 +97,7 @@ def detect():
         result = None
         selected_option = request.form.get('select_mode')
         if(selected_option == "currency"):
-            result = (file_path, "currency")
+            result = image_detection(file_path, "currency")
         elif(selected_option == "describe"):
             result = generate_caption_from_image(file_path)
         elif(selected_option == "text"):
@@ -105,10 +105,11 @@ def detect():
         elif(selected_option == "find"):
             object_to_be_found = request.form.get('object_to_be_found')
             result = find(file_path, object_to_be_found)
-        else:
+        elif(selected_option == "object"):
             result = image_detection(file_path, "object")
 
         print("Response Sent Successfully\n")
+        print(result, selected_option)
         return jsonify([
             {
                 'result' : result,
