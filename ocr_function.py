@@ -15,9 +15,9 @@ def ocr_image_to_text(image_path, lang=None):
 
  # Perform OCR
  if(lang == 'ar'):
-  txt = pytesseract.image_to_string(frame_enh)
- else:
   txt = pytesseract.image_to_string(frame_enh, lang='ara',config= ".")
+ else:
+  txt = pytesseract.image_to_string(frame_enh)
 
  # Text-to-Speech
  if txt:
