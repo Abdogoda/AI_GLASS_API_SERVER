@@ -102,6 +102,8 @@ def detect():
             result = generate_caption_from_image(file_path)
         elif(selected_option == "text"):
             result = ocr_image_to_text(file_path)
+        elif(selected_option == "text_ar"):
+            result = ocr_image_to_text(file_path, lang="ar")
         elif(selected_option == "find"):
             object_to_be_found = request.form.get('object_to_be_found')
             result = find(file_path, object_to_be_found)
