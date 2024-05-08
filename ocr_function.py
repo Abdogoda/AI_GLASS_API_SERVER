@@ -28,4 +28,4 @@ def ocr_image_to_text(image_path, lang=None):
 
 def test_ocr():
  print(ocr_image_to_text("static/logo.png"))
- print(ocr_image_to_text("static/logo.png", lang="ar"))
+ #print(ocr_image_to_text("static/logo.png", lang="ar"))
