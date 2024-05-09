@@ -40,6 +40,8 @@ def get_objects_count(model, results):
                         object_counts[model.names[ClassInd]] = 1
                     else:
                         object_counts[model.names[ClassInd]] += 1
+                else:
+                    return False
         else:
             return False
 
@@ -61,7 +63,7 @@ def objectNames(object_names_count):
 def image_detection(frame, mode):
     object_counts = detection(frame, mode)
     if(object_counts == False):
-        return "Nothing To Detect!"
+        return "No Objects To Detect"
     else:
         return objectNames(object_counts)
 
