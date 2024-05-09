@@ -111,10 +111,8 @@ def find(image_path, object_to_be_found):
                     apparent_width = w
                     distance = round((obj_width * focal_length) / apparent_width * (real_width / obj_width))
                     return "the " + class_name + " is " + str(distance) + " cm away."
-                else:
-                    return object_to_be_found + " is not found!"
         else:
-            return "Nothing To Detect!"
+            return "No Object To Be Found!"
 
 def test_find():
     print(find("static/logo.png", "cat"))
