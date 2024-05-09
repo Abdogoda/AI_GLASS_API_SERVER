@@ -85,7 +85,12 @@ def detect():
                 'mode' : 'object'
             }])
         
-        print("Processing ............")
+        selected_option = request.form.get('select_mode')
+        object_to_be_found = request.form.get('object_to_be_found')
+        if(selected_option == "find"):
+            print("Processing ............ Mode = ", selected_option, "OTBF = ", object_to_be_found)
+        else:
+            print("Processing ............ Mode = ", selected_option )
 
         # Get the file from post request
         f = request.files['file']
@@ -95,19 +100,20 @@ def detect():
 
         # Make prediction
         result = None
-        selected_option = request.form.get('select_mode')
         if(selected_option == "currency"):
-            result = (file_path, "currency")
+            result = image_detection(file_path, "currency")
         elif(selected_option == "describe"):
             result = generate_caption_from_image(file_path)
         elif(selected_option == "text"):
             result = ocr_image_to_text(file_path)
+        elif(selected_option == "text_ar"):
+            result = ocr_image_to_text(file_path, lang="ar")
         elif(selected_option == "find"):
-            object_to_be_found = request.form.get('object_to_be_found')
             result = find(file_path, object_to_be_found)
-        else:
+        elif(selected_option == "object"):
             result = image_detection(file_path, "object")
 
+        print(result, selected_option)
         print("Response Sent Successfully\n")
         return jsonify([
             {
