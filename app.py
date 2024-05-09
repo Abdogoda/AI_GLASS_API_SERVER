@@ -4,6 +4,7 @@
 import os
 import shutil
 import numpy as np
+from ultralytics import YOLO
 from waitress import serve
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -18,6 +19,7 @@ from ocr_function import ocr_image_to_text, test_ocr
 # ---------------------------------------
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
+model = YOLO("yolov8m.pt")
 
 # ---------------------------------------
 # Test The Program Functions ------------
@@ -70,7 +72,8 @@ def save_file(file):
 @app.route('/', methods=['GET'])
 def index():
     # Main page
-    return render_template('index.html')
+    names = model.names
+    return render_template('index.html', names=names)
 
 
 # ---------------------------------------
@@ -113,7 +116,7 @@ def detect():
         elif(selected_option == "object"):
             result = image_detection(file_path, "object")
 
-        print(result, selected_option)
+        print(result)
         print("Response Sent Successfully\n")
         return jsonify([
             {
@@ -129,5 +132,5 @@ def detect():
 # Run The App ---------------------------
 # ---------------------------------------
 if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=5001)
+    serve(app, host='0.0.0.0', port=5001, threads=100)
 

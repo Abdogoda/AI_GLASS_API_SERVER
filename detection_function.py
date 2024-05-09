@@ -3,6 +3,7 @@
 # ------------------------------
 from ultralytics import YOLO
 import math
+from num2words import num2words
 
 
 # --- DEFINE THE MODEL ---
@@ -18,7 +19,7 @@ def detection(frame, mode):
     if(mode == "currency"):
         model = currency_model
 
-    results = model.predict(frame)
+    results = model.predict(frame, save=True)
     object_counts = get_objects_count(model, results)
 
     return object_counts
@@ -40,11 +41,6 @@ def get_objects_count(model, results):
                         object_counts[model.names[ClassInd]] = 1
                     else:
                         object_counts[model.names[ClassInd]] += 1
-                else:
-                    return False
-        else:
-            return False
-
     return object_counts
 
 # --- Create Text From Object Names ---
@@ -53,17 +49,16 @@ def objectNames(object_names_count):
     for index, (key, value) in enumerate(object_names_count.items()):
         is_sum = "s" if value > 1 else ""
         is_and = "" if index == len(object_names_count)-1 else "and "
-        final_text += f"{value} {key}{is_sum} {is_and}"
+        final_text += f"{num2words(value)} {key}{is_sum} {is_and}"
     
     return final_text
-    
 
 
 # --- IMAGE DETECTION ---
 def image_detection(frame, mode):
     object_counts = detection(frame, mode)
     if(object_counts == False):
-        return "No Objects To Detect"
+        return "Nothing To Detect!"
     else:
         return objectNames(object_counts)
 
