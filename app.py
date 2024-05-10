@@ -3,6 +3,7 @@
 # ---------------------------------------
 import os
 import shutil
+import random
 import numpy as np
 from ultralytics import YOLO
 from waitress import serve
@@ -11,7 +12,7 @@ from werkzeug.utils import secure_filename
 from flask import Flask, request, render_template, jsonify
 from finder_and_depth_estimation import find, test_find
 from detection_function import *
-from describe_function import generate_caption_from_image, test_describe
+from describe_function_2 import generate_caption_from_image, test_describe
 from ocr_function import ocr_image_to_text, test_ocr
 
 # ---------------------------------------
@@ -59,7 +60,7 @@ def save_file(file):
 
     # Save the image with the current datetime
     filename = secure_filename(file.filename)
-    filename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S_') + filename
+    filename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S_') + random.randint(1000,9999)
     file_path = os.path.join(today_folder_path, filename)
     file.save(file_path)
     return today_folder_path+'/'+filename

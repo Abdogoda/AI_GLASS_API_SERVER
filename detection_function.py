@@ -57,10 +57,10 @@ def objectNames(object_names_count):
 # --- IMAGE DETECTION ---
 def image_detection(frame, mode):
     object_counts = detection(frame, mode)
-    if(object_counts == False):
-        return "Nothing To Detect!"
-    else:
+    if(len(object_counts) > 0):
         return objectNames(object_counts)
+    else:
+        return "Nothing To Detect!"
 
 
 
