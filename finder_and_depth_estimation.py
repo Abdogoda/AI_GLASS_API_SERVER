@@ -74,7 +74,7 @@ object_data = {
     "mouse": {"width": 20, "real_width": 10},
     "remote": {"width": 30, "real_width": 15},
     "keyboard": {"width": 30.75, "real_width": 2.65},
-    "phone": {"width": 15, "real_width": 3.9},
+    "cell phone": {"width": 15, "real_width": 3.9},
     "microwave": {"width": 50, "real_width": 50},
     "oven": {"width": 70, "real_width": 70},
     "toaster": {"width": 40, "real_width": 40},
@@ -90,11 +90,21 @@ object_data = {
 }
 
 def find(image_path, object_to_be_found):
+    # return if the object is none
     if object_to_be_found == None:
         return "Nothing to detect!"
+    
+    # read the image and make detection
     img = cv2.imread(image_path)
     results = model.predict(img, save=True)
     founded = False
+
+    # Define the boundaries of the three parts
+    image_width = img.shape[1]
+    left_boundary = image_width // 3
+    right_boundary = 2 * left_boundary
+
+    # loop through the model results
     for r in results:
         boxes = r.boxes
         if boxes:
@@ -113,7 +123,16 @@ def find(image_path, object_to_be_found):
                     real_width = object_data[class_name]["real_width"]
                     apparent_width = w
                     distance = round(((((obj_width * focal_length) / apparent_width * (real_width / obj_width)) + 35)) / 30.48)
-                    return "the " + class_name + " is " + str(distance) + " feet away."
+
+                    # Check which part the object belongs to
+                    if x2 < left_boundary:
+                        part = "to your left"
+                    elif x1 > right_boundary:
+                        part = "to your right"
+                    else:
+                        part = "in front of you"
+
+                    return "The " + class_name + " is " + str(distance) + " feet " + part
             if founded == False:
                 return object_to_be_found + " is not found!"
         else:

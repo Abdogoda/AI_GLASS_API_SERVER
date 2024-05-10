@@ -13,6 +13,7 @@ from finder_and_depth_estimation import find, test_find
 from detection_function import *
 from describe_function_2 import generate_caption_from_image, test_describe
 from ocr_function import ocr_image_to_text, test_ocr
+from summarize_function import summarize_text, test_summarize
 
 # ---------------------------------------
 # Define a Flask app --------------------
@@ -29,6 +30,9 @@ test_describe()
 print("Done ✔️")
 print("Testing the Ocr Text Mode ............")
 test_ocr()
+print("Done ✔️")
+print("Testing the Summarize Text Mode ............")
+test_summarize()
 print("Done ✔️")
 print("Testing the Finder Mode ............")
 test_find()
@@ -111,6 +115,8 @@ def detect():
             result = ocr_image_to_text(file_path)
         elif(selected_option == "text_ar"):
             result = ocr_image_to_text(file_path, lang="ar")
+        elif(selected_option == "summarize"):
+            result = summarize_text(file_path)
         elif(selected_option == "find"):
             result = find(file_path, object_to_be_found)
         elif(selected_option == "object"):
