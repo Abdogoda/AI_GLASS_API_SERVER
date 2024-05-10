@@ -3,7 +3,6 @@
 # ---------------------------------------
 import os
 import shutil
-import random
 import numpy as np
 from ultralytics import YOLO
 from waitress import serve
