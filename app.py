@@ -60,7 +60,7 @@ def save_file(file):
 
     # Save the image with the current datetime
     filename = secure_filename(file.filename)
-    filename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S_') + random.randint(1000,9999)
+    filename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S_') + filename
     file_path = os.path.join(today_folder_path, filename)
     file.save(file_path)
     return today_folder_path+'/'+filename
